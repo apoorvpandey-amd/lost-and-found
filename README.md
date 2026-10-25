@@ -1,137 +1,110 @@
 # FindIt - Lost & Found Web Application
 
-A full-featured, secure, and modern **Lost & Found Portal** built with **PHP, HTML5, CSS3, and JavaScript**.
+A modern, clean, and responsive **Lost & Found Portal** built with **HTML5, CSS3, JavaScript, and lightweight PHP**.
+
+The frontend is structured around **clean HTML files** (`index.html`, `browse.html`, `report.html`, etc.) without overloading the templates with server-side PHP tags, while PHP is kept strictly for backend services (`api.php`, database operations, and authentication).
 
 ---
 
-## 🌟 Key Features & Requirements Coverage
+## 🌟 Key Architecture & Highlights
 
-### 1. Database Operations (Full CRUD & Search)
-- **INSERT**:
-  - Report Lost or Found items with image uploads (`report.php`).
-  - Submit proof of ownership claims or contact messages (`item.php`).
-  - Register new user accounts (`register.php`).
-- **SEARCH**:
-  - Live search across titles, descriptions, and locations (`browse.php` & `index.php`).
-  - Multi-criteria filtering by item type (*All*, *Lost*, *Found*, *Resolved*).
-  - Category filtering (*Electronics*, *Wallets*, *Keys*, *Documents*, *Clothing*, *Pets*, *Books*, etc.).
-  - Date sorting (*Newest First*, *Oldest First*).
-- **UPDATE**:
-  - Edit existing reports, replace images, and update contact information (`edit_item.php`).
-  - Update report status (*Active* &rarr; *Claimed* &rarr; *Returned*) (`update_status.php`).
-  - Approve or Reject ownership claims (`dashboard.php` & `admin.php`).
-- **DELETE**:
-  - Permanently remove item reports with cascade cleanup of associated claims and server image files (`delete_item.php`).
-  - Security token (CSRF) verification on all deletions.
+### 1. HTML5-First Frontend (Clean, No PHP Overload)
+- **`index.html`**:
+  - The flagship entry page written in pure semantic HTML5.
+  - Interactive hero section with instant search and category select.
+  - Real-time live statistics counters (Total Reports, Active Lost, Active Found, Resolved).
+  - Quick category filter pills (Electronics, Wallets, Keys, Documents, Clothing, Pets, etc.).
+  - Dynamic filter tabs (*All Recent*, *Lost Items*, *Found Items*, *Resolved*).
+  - Instant live search input with dynamic cards grid.
+  - Interactive "How It Works" 3-step community guide and safety guidelines.
+  - Embedded claim dialog modal and item details modal.
+  - Includes seed fallback data so it renders immediately even when double-clicked directly as a local file (`file:///`)!
+- **`browse.html`**:
+  - Dedicated search and filter catalog in pure HTML.
+  - Live client-side filtering by keywords, item status, categories, and date sorting.
+- **`report.html`**:
+  - Clean HTML form with interactive "Lost" vs "Found" radio selector.
+  - Drag-and-drop photo upload with live image preview and removal.
+  - Client-side validation (`js/validation.js`) with instant feedback.
+- **`login.html` & `register.html`**:
+  - User-friendly authentication forms with client-side validation.
 
-### 2. Form Field Validation & Styling
-- **Client-Side Validation (`js/validation.js`)**:
-  - Instant validation on `input` and `blur`.
-  - Email format verification, phone number regex check, minimum string lengths, password confirmation check, future date prevention.
-  - File upload validation (format check for JPG/PNG/WEBP/GIF and 5MB size limit) with **live image preview**.
-- **Server-Side Validation**:
-  - Rigorous PHP sanitization (`htmlspecialchars`, `filter_var`), required field validation, and error arrays displayed clearly on forms.
-- **Modern Responsive Design (`css/style.css`)**:
-  - CSS custom properties, cards, hero banner, status badges, sticky navigation, modal popups, interactive toast alerts, and responsive grid layouts.
+### 2. Lightweight Backend Services & RESTful API
+- **`api.php`**:
+  - Lightweight RESTful API returning structured JSON.
+  - `action=get_items`: Fetch items filtered by type, category, query keyword, and sort order.
+  - `action=get_stats`: Live counts of total, lost, found, and resolved items.
+  - `action=submit_claim`: Secure processing of ownership claim inquiries.
+  - `action=create_item`: Post new lost/found reports directly via AJAX or FormData.
+  - `action=get_item`: Fetch single item details by ID.
+- **`index.php`**:
+  - Clean lightweight server bridge that serves `index.html` seamlessly on any PHP server (`localhost:8000/`).
 
-### 3. Session & Role Management
-- Session initialization (`session_start()`) with secure session regeneration (`session_regenerate_id`).
-- User authentication (*Sign In*, *Registration*, *Sign Out*).
-- Role-based authorization:
-  - **Regular Users**: Can submit items, edit/delete their own reports, and approve/reject claims on their items.
-  - **Administrators**: Complete oversight to moderate all items, process all claims, and view all registered users.
-- Protected routes: Non-logged-in users are redirected to `login.php` when attempting restricted actions.
-- CSRF Protection: Cryptographic tokens (`$_SESSION['csrf_token']`) verified on form submissions.
-
-### 4. Interlinked Whole Working Application
-- **Pages Included**:
-  - `index.php`: Home page with hero, live statistics counters, quick action buttons, and latest reports.
-  - `browse.php`: Dedicated search and filter catalog with result counts.
-  - `report.php`: Multi-field submission form for Lost & Found items.
-  - `item.php`: Detailed view with item photo, reporter contact, management controls, and claim submission modal.
-  - `edit_item.php`: Full edit form with existing data pre-filled.
-  - `delete_item.php`: Authorized deletion handler with image removal.
-  - `update_status.php`: One-click status toggler.
-  - `login.php`: Secure user authentication and session management.
-  - `register.php`: New account creation with duplicate email checks.
-  - `logout.php`: Session termination and clean redirect.
-  - `dashboard.php`: User management portal (My Items, Status controls, Claims Received).
-  - `admin.php`: Administrator oversight panel (System statistics, moderation table, all claims, user directory).
-  - `api.php`: RESTful JSON API for async queries and claims.
+### 3. Database Operations (Full CRUD)
+- **INSERT**: Report items (`report.html` / `report.php`), submit claims (`api.php`), and create accounts (`register.html` / `register.php`).
+- **SEARCH**: Live search across titles, descriptions, and locations (`browse.html`).
+- **UPDATE**: Edit reports, upload photos, and update status (`edit_item.php`, `update_status.php`).
+- **DELETE**: Remove reports with cascade cleanup of associated claims and uploaded images (`delete_item.php`).
 
 ---
 
 ## 🚀 How to Run the Application
 
-### Option A: Using Built-in PHP Server (Zero Setup)
-1. Open PowerShell or Terminal in this project directory:
-   ```bash
-   cd d:\downloadsD\antigravity\lost_and_found
-   ```
-2. Start the PHP server:
-   ```bash
-   php -S localhost:8000
-   ```
-3. Open your browser and navigate to:
-   ```
-   http://localhost:8000
-   ```
-> **Note:** By default, the application uses **SQLite** (`lost_and_found.db`), which automatically creates all tables and populates sample data on the first launch without needing MySQL!
+### Option A: Open `index.html` Directly in Any Browser
+Double-click `index.html` in your file explorer (or open with Chrome, Edge, Firefox, or VS Code Live Server).
+> The page renders instantly with fallback items and offline styling!
 
 ---
 
-### Option B: Using XAMPP / WAMP / Laragon
-1. Copy or move the `lost_and_found` folder into your server's root folder:
-   - **XAMPP**: `C:\xampp\htdocs\lost_and_found`
-   - **WAMP**: `C:\wamp64\www\lost_and_found`
-   - **Laragon**: `C:\laragon\www\lost_and_found`
-2. Open your browser and navigate to:
-   ```
-   http://localhost/lost_and_found/
-   ```
+### Option B: Start Local Server with 1-Click
+Double-click **`start-server.bat`** in the project folder. It will start the local server and automatically open:
+```
+http://localhost:8000/index.html
+```
 
-#### Switching to MySQL (Optional):
-1. Open `config.php` and change `DB_DRIVER`:
-   ```php
-   define('DB_DRIVER', 'mysql');
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'lost_and_found');
-   define('DB_USER', 'root');
-   define('DB_PASS', '');
-   ```
-2. Open **phpMyAdmin** (`http://localhost/phpmyadmin/`) and import the included `database.sql` file.
+Or from PowerShell / Command Prompt:
+```bash
+cd d:\downloadsD\antigravity\lost_and_found
+php -S localhost:8000
+```
+Then navigate to:
+```
+http://localhost:8000
+```
+
+> **Database Note:** Uses **SQLite** (`lost_and_found.db`) out-of-the-box with zero setup required. You can also switch to MySQL in `config.php` if desired.
 
 ---
 
-## 📁 Project Architecture
+## 📁 Project Directory Structure
 
 ```
 lost_and_found/
-├── config.php                  # Configuration (database, uploads, session start)
-├── db.php                      # PDO connection helper & auto-table creator
-├── database.sql                # MySQL database schema & sample seed data
-├── index.php                   # Home page (Hero, live stats, latest cards)
-├── browse.php                  # Search & Filter catalog (SEARCH)
-├── item.php                    # Item details & claim form (READ & INSERT claim)
-├── report.php                  # Post lost/found item (INSERT)
-├── edit_item.php               # Edit item details (UPDATE)
-├── delete_item.php             # Delete item handler (DELETE)
-├── update_status.php           # Status toggler (UPDATE)
-├── login.php                   # Session login with validation
-├── register.php                # Session registration with validation
-├── logout.php                  # Session logout
-├── dashboard.php               # User dashboard (My Items & Claims)
-├── admin.php                   # Admin moderation panel
-├── api.php                     # RESTful JSON API
-├── includes/
-│   ├── header.php              # Global navigation bar & session badges
-│   ├── footer.php              # Global footer & quick links
-│   ├── auth.php                # Authentication & role protection
-│   └── functions.php           # Flash messages, CSRF, sanitization, image upload
+├── index.html                  # Main HTML5 landing page (Hero, stats, cards, modals)
+├── browse.html                 # Dedicated HTML search & filter catalog
+├── report.html                 # Clean HTML report submission form with photo upload
+├── login.html                  # HTML user sign-in page
+├── register.html               # HTML user registration page
+├── index.php                   # Lightweight server bridge (serves index.html)
+├── api.php                     # RESTful JSON API endpoints
+├── config.php                  # Database settings, upload paths & session settings
+├── db.php                      # SQLite/MySQL PDO database connection helper
+├── database.sql                # MySQL schema backup
+├── start-server.bat            # 1-click startup script
 ├── css/
-│   └── style.css               # Modern responsive styling
+│   └── style.css               # Clean, modern, responsive CSS styling
 ├── js/
-│   ├── validation.js           # Client-side validation & live image preview
-│   └── app.js                  # Modals, toasts, delete confirmation
-└── uploads/                    # User uploaded photos
+│   ├── app.js                  # Modals, live filtering, dynamic API fetch, toasts
+│   └── validation.js           # Client-side form validation & live image preview
+├── includes/
+│   ├── auth.php                # Session & authentication checks
+│   ├── functions.php           # Helper utilities, sanitization & image upload handler
+│   ├── header.php              # Shared PHP header component (for dashboard/admin)
+│   └── footer.php              # Shared PHP footer component
+├── edit_item.php               # Backend edit item handler
+├── delete_item.php             # Backend item deletion handler
+├── update_status.php           # Status toggler
+├── dashboard.php               # User item management portal
+├── admin.php                   # Administrative oversight panel
+└── uploads/                    # User-uploaded photos
 ```

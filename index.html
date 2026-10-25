@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindIt - Reconnecting Lost Belongings</title>
+    <meta name="description" content="FindIt is a community-powered lost and found portal. Report lost valuables, find missing items, and connect safely.">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="homePageMarker"></div>
+
+    <!-- Site Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🔍</div>
+                <span>FindIt</span>
+            </a>
+
+            <!-- Mobile menu button -->
+            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li>
+                        <a href="index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li>
+                        <a href="browse.html" class="nav-link">Browse &amp; Search</a>
+                    </li>
+                    <li>
+                        <a href="#how-it-works" class="nav-link">How It Works</a>
+                    </li>
+                    <li>
+                        <a href="#safety" class="nav-link">Safety</a>
+                    </li>
+                    <li>
+                        <a href="report.html" class="btn btn-primary btn-sm">
+                            <span>+</span> Report an Item
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html" class="nav-link">Sign In</a>
+                    </li>
+                    <li>
+                        <a href="register.html" class="btn btn-secondary btn-sm">Register</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Global Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">✨ Community-Powered Recovery Network</div>
+            <h1 class="hero-title">Lost Something? <span>We Help You Find It.</span></h1>
+            <p class="hero-desc">
+                Browse hundreds of lost and found reports, or quickly report a missing item to reunite it with its rightful owner.
+            </p>
+
+            <!-- Search Bar Form (Submits to browse.html) -->
+            <form id="heroSearchForm" class="search-box-wrapper" action="browse.html" method="GET">
+                <input type="text" id="heroSearchInput" name="q" class="search-input" placeholder="What did you lose or find? (e.g. Keys, Wallet, Phone...)" aria-label="Search items">
+                
+                <select id="heroCategorySelect" name="category" class="search-category-select" aria-label="Select category">
+                    <option value="">All Categories</option>
+                    <option value="electronics">📱 Electronics &amp; Gadgets</option>
+                    <option value="wallets">👛 Wallets &amp; Purses</option>
+                    <option value="keys">🔑 Keys &amp; Keychains</option>
+                    <option value="documents">🪪 Cards &amp; Documents</option>
+                    <option value="clothing">👓 Clothing &amp; Eyewear</option>
+                    <option value="pets">🐾 Pets &amp; Animals</option>
+                    <option value="books">📚 Books &amp; Notebooks</option>
+                    <option value="jewelry">⌚ Jewelry &amp; Watches</option>
+                    <option value="other">📦 Other Belongings</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">
+                    🔍 Search
+                </button>
+            </form>
+
+            <!-- Quick Action Buttons -->
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="report.html?type=lost" class="btn btn-danger">
+                    📢 Report a Lost Item
+                </a>
+                <a href="report.html?type=found" class="btn btn-success">
+                    🤝 Report a Found Item
+                </a>
+                <a href="browse.html" class="btn btn-secondary">
+                    🔍 Explore Catalog
+                </a>
+            </div>
+
+            <!-- Live Statistics Ribbon -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <span class="stat-number" id="statTotal">3</span>
+                    <span class="stat-label">Total Reports</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="statLost" style="color: var(--lost-color);">2</span>
+                    <span class="stat-label">Active Lost</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="statFound" style="color: var(--found-color);">1</span>
+                    <span class="stat-label">Active Found</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="statResolved" style="color: var(--primary);">1</span>
+                    <span class="stat-label">Reunited / Resolved</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+        <!-- Category Quick Filters -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.4rem; font-weight: 800;">Explore by Category</h2>
+            <a href="browse.html" style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">View All Catalog &rarr;</a>
+        </div>
+
+        <div class="category-pills">
+            <button type="button" class="category-pill active" data-category="all">
+                <span>🌐</span> All Categories
+            </button>
+            <button type="button" class="category-pill" data-category="electronics">
+                <span>📱</span> Electronics &amp; Gadgets
+            </button>
+            <button type="button" class="category-pill" data-category="wallets">
+                <span>👛</span> Wallets &amp; Purses
+            </button>
+            <button type="button" class="category-pill" data-category="keys">
+                <span>🔑</span> Keys &amp; Keychains
+            </button>
+            <button type="button" class="category-pill" data-category="documents">
+                <span>🪪</span> Cards &amp; Documents
+            </button>
+            <button type="button" class="category-pill" data-category="clothing">
+                <span>👓</span> Clothing &amp; Eyewear
+            </button>
+            <button type="button" class="category-pill" data-category="pets">
+                <span>🐾</span> Pets &amp; Animals
+            </button>
+            <button type="button" class="category-pill" data-category="books">
+                <span>📚</span> Books &amp; Notebooks
+            </button>
+            <button type="button" class="category-pill" data-category="jewelry">
+                <span>⌚</span> Jewelry &amp; Watches
+            </button>
+            <button type="button" class="category-pill" data-category="other">
+                <span>📦</span> Other
+            </button>
+        </div>
+
+        <!-- Section Title & Filter Tabs -->
+        <div class="filter-bar">
+            <div class="type-tabs">
+                <button type="button" class="tab-btn active" data-type="all">All Recent</button>
+                <button type="button" class="tab-btn" data-type="lost">Lost Items</button>
+                <button type="button" class="tab-btn" data-type="found">Found Items</button>
+                <button type="button" class="tab-btn" data-type="claimed">Resolved</button>
+            </div>
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <input type="text" id="quickSearchInput" class="form-control" style="width: 220px; padding: 0.45rem 0.85rem; font-size: 0.85rem;" placeholder="Filter current list...">
+                <a href="browse.html" class="btn btn-secondary btn-sm">Full Catalog &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Items Grid Container -->
+        <div class="items-grid" id="itemsGrid">
+            <!-- Cards are loaded dynamically via JS & API, with initial HTML fallback -->
+        </div>
+
+        <!-- How It Works Section -->
+        <section class="section-block" id="how-it-works">
+            <div class="section-header">
+                <h2 class="section-title">How FindIt Works</h2>
+                <p class="section-subtitle">Three easy steps to recover your lost belongings or help someone in your community.</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-number">01</span>
+                    <div class="step-icon">📢</div>
+                    <h3 class="step-title">1. Post a Report</h3>
+                    <p class="step-desc">
+                        Provide a clear description, location, date, and optional photo of the lost or found item.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">02</span>
+                    <div class="step-icon">🔎</div>
+                    <h3 class="step-title">2. Search &amp; Match</h3>
+                    <p class="step-desc">
+                        Use intelligent category filters and instant keyword search to find potential matches across the portal.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">03</span>
+                    <div class="step-icon">🤝</div>
+                    <h3 class="step-title">3. Safe Reunion</h3>
+                    <p class="step-desc">
+                        Submit a claim with proof of ownership, connect securely, and arrange a safe public handover.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety Guidelines Section -->
+        <section class="section-block" id="safety">
+            <div class="section-header">
+                <h2 class="section-title">Safety &amp; Verification Tips</h2>
+                <p class="section-subtitle">Follow these trusted practices to keep yourself and your belongings safe.</p>
+            </div>
+
+            <div class="safety-grid">
+                <div class="safety-card">
+                    <div class="safety-icon">🏛️</div>
+                    <div>
+                        <h4>Meet in Public Places</h4>
+                        <p>Always arrange exchanges in well-lit public spots like campus security desks, libraries, or station lobbies.</p>
+                    </div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="safety-icon">🔒</div>
+                    <div>
+                        <h4>Verify Proof of Ownership</h4>
+                        <p>Ask for unique identifying details such as device serial numbers, distinctive marks, or purchase receipts.</p>
+                    </div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="safety-icon">💳</div>
+                    <div>
+                        <h4>Never Send Advance Money</h4>
+                        <p>Legitimate finders will never request courier delivery fees or gift cards in advance before meeting.</p>
+                    </div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="safety-icon">🛡️</div>
+                    <div>
+                        <h4>Protect Confidential Info</h4>
+                        <p>Never share sensitive passwords, PINs, or ID numbers during the inquiry or verification process.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA Bar -->
+        <div style="text-align: center; margin-top: 3.5rem; padding: 2.5rem; background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Can't find what you're looking for?</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try our advanced catalog search or post a new report for the community.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="browse.html" class="btn btn-secondary">🔍 Open Advanced Search</a>
+                <a href="report.html" class="btn btn-primary">+ Post a New Report</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Item Details Modal -->
+    <div class="modal-overlay" id="itemDetailModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="detailModalTitle">Item Details</h3>
+                <button type="button" class="modal-close-btn" data-close-modal title="Close">&times;</button>
+            </div>
+            <div class="modal-body" id="detailModalBody">
+                <!-- Content inserted dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Claim Modal Dialog -->
+    <div class="modal-overlay" id="claimModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Submit Claim Inquiry</h3>
+                <button type="button" class="modal-close-btn" data-close-modal title="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                    You are claiming: <strong id="claimModalItemTitle" style="color: var(--text-main);">this item</strong>. Please provide your contact info and proof of ownership.
+                </p>
+
+                <form id="claimForm">
+                    <input type="hidden" id="claimItemId" name="item_id" value="">
+
+                    <div class="form-group">
+                        <label class="form-label" for="claimantName">Your Full Name <span class="required">*</span></label>
+                        <input type="text" id="claimantName" name="claimant_name" class="form-control" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="claimantEmail">Your Email Address <span class="required">*</span></label>
+                        <input type="email" id="claimantEmail" name="claimant_email" class="form-control" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="claimantPhone">Phone Number (Optional)</label>
+                        <input type="tel" id="claimantPhone" name="claimant_phone" class="form-control" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="claimMessage">Proof of Ownership / Message <span class="required">*</span></label>
+                        <textarea id="claimMessage" name="claim_message" class="form-control" rows="3" placeholder="Describe unique identifying features, lock screen image, purchase receipt, serial number, or exact contents..." required></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+                        <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send Claim Inquiry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <span class="logo-icon">🔍</span>
+                    <strong>FindIt Portal</strong>
+                </div>
+                <p class="footer-tagline">
+                    An open community platform dedicated to helping people recover lost items, report discovered belongings, and connect securely.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="browse.html">Search &amp; Browse Catalog</a></li>
+                    <li><a href="report.html">Report Lost/Found Item</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#safety">Safety Guidelines</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Top Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="browse.html?category=electronics">📱 Electronics &amp; Gadgets</a></li>
+                    <li><a href="browse.html?category=wallets">👛 Wallets &amp; Purses</a></li>
+                    <li><a href="browse.html?category=keys">🔑 Keys &amp; Keychains</a></li>
+                    <li><a href="browse.html?category=documents">🪪 Cards &amp; Documents</a></li>
+                    <li><a href="browse.html?category=clothing">👓 Clothing &amp; Eyewear</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community Notice</h4>
+                <p class="footer-text">
+                    Always arrange exchanges in public, well-lit spaces like campus security desks or police station lobbies. Verify ownership before handing over valuables.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p>&copy; 2026 FindIt Lost &amp; Found Portal. Clean HTML &amp; JavaScript Architecture.</p>
+                <div class="footer-bottom-links">
+                    <a href="browse.html?type=lost">Lost Items</a>
+                    <a href="browse.html?type=found">Found Items</a>
+                    <a href="browse.html?type=claimed">Resolved</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initial Seed Items Fallback (Enables instant rendering offline/statically) -->
+    <script>
+        window.initialItems = [
+            {
+                id: 7,
+                type: "lost",
+                title: "SP Shine 125 keys",
+                category: "keys",
+                description: "A silver coloured key chain with 2 other keys lost near the bike parking area.",
+                location: "Parking near CO",
+                item_date: "2026-10-24",
+                image_url: null,
+                status: "active",
+                contact_name: "Apoorv Pandey",
+                contact_email: "apoorvpandey678@gmail.com"
+            },
+            {
+                id: 2,
+                type: "lost",
+                title: "Brown Leather Bi-fold Wallet",
+                category: "wallets",
+                description: "Lost vintage brown leather wallet during lunch hour. Contains driver license and cards.",
+                location: "University Cafeteria, Booth 12",
+                item_date: "2026-10-11",
+                image_url: null,
+                status: "active",
+                contact_name: "John Doe",
+                contact_email: "john@example.com"
+            },
+            {
+                id: 6,
+                type: "found",
+                title: "Calculus & Linear Algebra Textbook (9th Ed)",
+                category: "books",
+                description: "Hardcover university math textbook left on row 3 desk. Has yellow highlighter markings.",
+                location: "Science Complex, Lecture Hall B",
+                item_date: "2026-10-09",
+                image_url: null,
+                status: "claimed",
+                contact_name: "Department Helpdesk",
+                contact_email: "helpdesk@example.com"
+            }
+        ];
+    </script>
+
+    <!-- Global App Scripts -->
+    <script src="js/validation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

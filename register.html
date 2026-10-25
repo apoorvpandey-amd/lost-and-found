@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create an Account - FindIt</title>
+    <meta name="description" content="Register an account on FindIt to manage your lost and found listings.">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Site Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🔍</div>
+                <span>FindIt</span>
+            </a>
+
+            <!-- Mobile menu button -->
+            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="browse.html" class="nav-link">Browse &amp; Search</a></li>
+                    <li><a href="report.html" class="btn btn-primary btn-sm"><span>+</span> Report an Item</a></li>
+                    <li><a href="login.html" class="nav-link">Sign In</a></li>
+                    <li><a href="register.html" class="btn btn-secondary btn-sm active">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <div class="form-container" style="max-width: 520px; margin-top: 3rem;">
+            <div class="form-header">
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📝</div>
+                <h1>Create an Account</h1>
+                <p>Join the FindIt recovery community to easily manage your reports and get notified of claims.</p>
+            </div>
+
+            <form action="register.php" method="POST" class="needs-validation" novalidate>
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Alex Morgan" required minlength="2">
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="alex@example.com" required>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone Number (Optional)</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="+1 (555) 000-0000">
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label class="form-label" for="password">Password <span class="required">*</span></label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="At least 6 characters" required minlength="6">
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label class="form-label" for="confirm_password">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Repeat your password" required minlength="6">
+                </div>
+
+                <!-- Submit Button -->
+                <div style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+                        Register Account
+                    </button>
+                </div>
+            </form>
+
+            <div style="text-align: center; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 700;">Sign in here</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p>&copy; 2026 FindIt Lost &amp; Found Portal.</p>
+                <div class="footer-bottom-links">
+                    <a href="index.html">Home</a>
+                    <a href="browse.html">Browse</a>
+                    <a href="report.html">Report</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/validation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

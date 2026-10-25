@@ -39,6 +39,6 @@ if (!file_exists(UPLOAD_DIR)) {
 }
 
 // Start PHP Session safely
-if (session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
     session_start();
 }

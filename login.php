@@ -18,7 +18,7 @@ $errors = [];
 $redirect = $_GET['redirect'] ?? 'dashboard.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+    if (!empty($_POST['csrf_token']) && !verify_csrf_token($_POST['csrf_token'])) {
         $errors['csrf'] = 'Session expired or invalid security token. Please try again.';
     }
 

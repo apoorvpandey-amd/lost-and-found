@@ -28,8 +28,8 @@ $errors = [];
 
 // Form Submission (INSERT)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Verify CSRF Token
-    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+    // 1. Verify CSRF Token (if submitted with token)
+    if (!empty($_POST['csrf_token']) && !verify_csrf_token($_POST['csrf_token'])) {
         $errors['csrf'] = 'Invalid or expired form security token. Please try again.';
     }
 
