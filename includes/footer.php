@@ -15,11 +15,6 @@ $categories = get_categories();
                 <p class="footer-tagline">
                     An open community platform dedicated to helping people recover lost items, report discovered belongings, and connect securely.
                 </p>
-                <div class="demo-credentials">
-                    <small><strong>Demo Accounts:</strong></small>
-                    <small>User: <code>john@example.com</code> / <code>password123</code></small>
-                    <small>Admin: <code>admin@findit.local</code> / <code>admin123</code></small>
-                </div>
             </div>
 
             <div class="footer-col">

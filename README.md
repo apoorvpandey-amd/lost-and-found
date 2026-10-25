@@ -52,7 +52,7 @@ A full-featured, secure, and modern **Lost & Found Portal** built with **PHP, HT
   - `edit_item.php`: Full edit form with existing data pre-filled.
   - `delete_item.php`: Authorized deletion handler with image removal.
   - `update_status.php`: One-click status toggler.
-  - `login.php`: Secure login with demo account autofill buttons.
+  - `login.php`: Secure user authentication and session management.
   - `register.php`: New account creation with duplicate email checks.
   - `logout.php`: Session termination and clean redirect.
   - `dashboard.php`: User management portal (My Items, Status controls, Claims Received).
@@ -100,17 +100,6 @@ A full-featured, secure, and modern **Lost & Found Portal** built with **PHP, HT
    define('DB_PASS', '');
    ```
 2. Open **phpMyAdmin** (`http://localhost/phpmyadmin/`) and import the included `database.sql` file.
-
----
-
-## 🔑 Demo Login Accounts
-
-| Role | Email | Password |
-|---|---|---|
-| **Regular User** | `john@example.com` | `password123` |
-| **Administrator** | `admin@findit.local` | `admin123` |
-
-*(You can also register a new account on the `register.php` page anytime).*
 
 ---
 

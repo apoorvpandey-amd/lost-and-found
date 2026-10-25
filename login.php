@@ -66,18 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Log in to manage your reports, respond to claims, and track lost belongings.</p>
         </div>
 
-        <!-- Quick Demo Account Pills -->
-        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; font-size: 0.85rem;">
-            <strong>Quick Demo Logins:</strong>
-            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="fillDemo('john@example.com', 'password123')">
-                    Regular User (John)
-                </button>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="fillDemo('admin@findit.local', 'admin123')">
-                    Administrator
-                </button>
-            </div>
-        </div>
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
@@ -128,11 +116,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </main>
 
-<script>
-function fillDemo(email, pass) {
-    document.getElementById('email').value = email;
-    document.getElementById('password').value = pass;
-}
-</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
