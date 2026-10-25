@@ -23,8 +23,8 @@ $user = current_user();
     <!-- Site Navigation -->
     <header class="header">
         <div class="nav-container">
-            <a href="index.php" class="logo">
-                <div class="logo-icon">🔍</div>
+            <a href="index.html" class="logo">
+                <div class="logo-icon">F</div>
                 <span>FindIt</span>
             </a>
 

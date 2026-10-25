@@ -9,7 +9,7 @@ $categories = get_categories();
         <div class="footer-top">
             <div class="footer-col">
                 <div class="footer-logo">
-                    <span class="logo-icon">🔍</span>
+                    <span class="logo-icon">F</span>
                     <strong>FindIt Portal</strong>
                 </div>
                 <p class="footer-tagline">

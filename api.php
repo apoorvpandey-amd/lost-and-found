@@ -102,7 +102,7 @@ function handleGetItems($pdo) {
     foreach ($items as &$item) {
         $catKey = $item['category'];
         $item['category_label'] = $categories[$catKey]['label'] ?? ucfirst($catKey);
-        $item['category_icon'] = $categories[$catKey]['icon'] ?? '📦';
+        $item['category_icon'] = '';
         $item['time_ago'] = time_ago($item['created_at']);
         if (!empty($item['image_path'])) {
             $item['image_url'] = UPLOAD_WEB_PATH . $item['image_path'];
@@ -133,7 +133,7 @@ function handleGetSingleItem($pdo) {
     $categories = get_categories();
     $catKey = $item['category'];
     $item['category_label'] = $categories[$catKey]['label'] ?? ucfirst($catKey);
-    $item['category_icon'] = $categories[$catKey]['icon'] ?? '📦';
+    $item['category_icon'] = '';
     $item['time_ago'] = time_ago($item['created_at']);
     if (!empty($item['image_path'])) {
         $item['image_url'] = UPLOAD_WEB_PATH . $item['image_path'];

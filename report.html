@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Lost or Found Item - FindIt</title>
-    <meta name="description" content="Report a lost or found item to reunite it with its rightful owner.">
+    <title>Report an Item - FindIt</title>
+    <meta name="description" content="File an official report for a lost or discovered item.">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,7 +15,7 @@
     <header class="header">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <div class="logo-icon">🔍</div>
+                <div class="logo-icon">F</div>
                 <span>FindIt</span>
             </a>
 
@@ -29,8 +29,8 @@
             <nav class="nav-menu" id="navMenu">
                 <ul class="nav-links">
                     <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="browse.html" class="nav-link">Browse &amp; Search</a></li>
-                    <li><a href="report.html" class="btn btn-primary btn-sm"><span>+</span> Report an Item</a></li>
+                    <li><a href="browse.html" class="nav-link">Search Catalog</a></li>
+                    <li><a href="report.html" class="btn btn-primary btn-sm">Report Item</a></li>
                     <li><a href="login.html" class="nav-link">Sign In</a></li>
                     <li><a href="register.html" class="btn btn-secondary btn-sm">Register</a></li>
                 </ul>
@@ -46,30 +46,30 @@
         <div class="breadcrumbs">
             <a href="index.html">Home</a>
             <span class="divider">/</span>
-            <a href="browse.html">Browse</a>
+            <a href="browse.html">Catalog</a>
             <span class="divider">/</span>
-            <span>Post a Report</span>
+            <span>Report Item</span>
         </div>
 
         <div class="form-container">
             <div class="form-header">
-                <h1>📢 Submit a Report</h1>
-                <p>Provide accurate details to maximize chances of finding or returning the item.</p>
+                <h1>File an Item Report</h1>
+                <p>Provide specific information to facilitate owner identification and recovery.</p>
             </div>
 
             <!-- Report Form -->
             <form id="reportItemForm" action="report.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <!-- Item Type Selection -->
                 <div class="type-selector">
-                    <label class="type-option-label lost-option">
+                    <label class="type-option-label">
                         <input type="radio" name="type" value="lost" id="typeLost" checked>
-                        <span>🔴 I Lost Something</span>
-                        <span class="sub-text">Report a lost personal belonging</span>
+                        <span>Lost Property</span>
+                        <span class="sub-text">Report missing personal property</span>
                     </label>
 
-                    <label class="type-option-label found-option">
+                    <label class="type-option-label">
                         <input type="radio" name="type" value="found" id="typeFound">
-                        <span>🟢 I Found Something</span>
+                        <span>Found Property</span>
                         <span class="sub-text">Report an item you discovered</span>
                     </label>
                 </div>
@@ -78,7 +78,7 @@
                     <!-- Title -->
                     <div class="form-group full-width">
                         <label class="form-label" for="title">Item Title <span class="required">*</span></label>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Blue Hydroflask Water Bottle, Black Leather Wallet" required minlength="3">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Stainless Steel Water Bottle, Black Leather Wallet" required minlength="3">
                     </div>
 
                     <!-- Category -->
@@ -86,43 +86,45 @@
                         <label class="form-label" for="category">Category <span class="required">*</span></label>
                         <select id="category" name="category" class="form-control" required>
                             <option value="">Select Category...</option>
-                            <option value="electronics">📱 Electronics &amp; Gadgets</option>
-                            <option value="wallets">👛 Wallets &amp; Purses</option>
-                            <option value="keys">🔑 Keys &amp; Keychains</option>
-                            <option value="documents">🪪 Cards &amp; Documents</option>
-                            <option value="clothing">👓 Clothing &amp; Eyewear</option>
-                            <option value="pets">🐾 Pets &amp; Animals</option>
-                            <option value="books">📚 Books &amp; Notebooks</option>
-                            <option value="jewelry">⌚ Jewelry &amp; Watches</option>
-                            <option value="other">📦 Other Belongings</option>
+                            <option value="electronics">Electronics &amp; Gadgets</option>
+                            <option value="wallets">Wallets &amp; Purses</option>
+                            <option value="keys">Keys &amp; Keychains</option>
+                            <option value="documents">Cards &amp; Documents</option>
+                            <option value="clothing">Clothing &amp; Eyewear</option>
+                            <option value="pets">Pets &amp; Animals</option>
+                            <option value="books">Books &amp; Notebooks</option>
+                            <option value="jewelry">Jewelry &amp; Watches</option>
+                            <option value="other">Other Belongings</option>
                         </select>
                     </div>
 
                     <!-- Date -->
                     <div class="form-group">
-                        <label class="form-label" for="item_date">Date Lost or Found <span class="required">*</span></label>
+                        <label class="form-label" for="item_date">Date of Incident <span class="required">*</span></label>
                         <input type="date" id="item_date" name="item_date" class="form-control" required>
                     </div>
 
                     <!-- Location -->
                     <div class="form-group full-width">
                         <label class="form-label" for="location">Location / Landmark <span class="required">*</span></label>
-                        <input type="text" id="location" name="location" class="form-control" placeholder="e.g. Science Library 2nd Floor, Starbucks Downtown, Bus Route 4" required minlength="3">
+                        <input type="text" id="location" name="location" class="form-control" placeholder="e.g. Main Library Floor 2, Student Union Cafeteria, Bus Route 4" required minlength="3">
                     </div>
 
                     <!-- Detailed Description -->
                     <div class="form-group full-width">
                         <label class="form-label" for="description">Detailed Description <span class="required">*</span></label>
-                        <textarea id="description" name="description" class="form-control" rows="4" placeholder="Mention brand, color, distinguishing marks, scratches, accessories, or specific details..." required minlength="10"></textarea>
+                        <textarea id="description" name="description" class="form-control" rows="4" placeholder="Detail color, brand, condition, unique scratches, contents, or distinguishing features..." required minlength="10"></textarea>
                     </div>
 
                     <!-- Image Upload with Live Preview -->
                     <div class="form-group full-width">
-                        <label class="form-label">Upload Photo (Optional)</label>
+                        <label class="form-label">Attach Photograph (Optional)</label>
                         <div class="file-upload-box">
-                            <div class="upload-icon">📷</div>
-                            <p style="font-weight: 600; margin-bottom: 0.25rem;">Click or drag an image here to upload</p>
-                            <p style="font-size: 0.85rem; color: var(--text-muted);">Supports JPG, PNG, WEBP, GIF (Max: 5MB)</p>
+                            <svg class="upload-icon-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                            </svg>
+                            <p style="font-weight: 500; font-size: 0.875rem; margin-bottom: 0.2rem; color: var(--text-main);">Click or drop an image file here to upload</p>
+                            <p style="font-size: 0.78rem; color: var(--text-muted);">Allowed formats: JPG, PNG, WEBP, GIF (Max size: 5MB)</p>
                             <input type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp,image/gif">
                         </div>
 
@@ -135,7 +137,7 @@
 
                     <!-- Contact Name -->
                     <div class="form-group">
-                        <label class="form-label" for="contact_name">Your Name <span class="required">*</span></label>
+                        <label class="form-label" for="contact_name">Contact Name <span class="required">*</span></label>
                         <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Full Name" required>
                     </div>
 
@@ -153,11 +155,11 @@
                 </div>
 
                 <!-- Submit Button & Cancel -->
-                <div style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
-                    <button type="submit" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
-                        🚀 Publish Item Report
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; align-items: center;">
+                    <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1.75rem;">
+                        Submit Report
                     </button>
-                    <a href="index.html" class="btn btn-secondary" style="padding: 0.85rem 1.5rem;">
+                    <a href="index.html" class="btn btn-secondary">
                         Cancel
                     </a>
                 </div>
@@ -170,48 +172,48 @@
         <div class="footer-top">
             <div class="footer-col">
                 <div class="footer-logo">
-                    <span class="logo-icon">🔍</span>
-                    <strong>FindIt Portal</strong>
+                    <span class="logo-icon">F</span>
+                    <span>FindIt Recovery Network</span>
                 </div>
                 <p class="footer-tagline">
-                    An open community platform dedicated to helping people recover lost items, report discovered belongings, and connect securely.
+                    An open community platform dedicated to helping individuals recover lost property, log discovered items, and facilitate secure returns.
                 </p>
             </div>
 
             <div class="footer-col">
-                <h4>Quick Navigation</h4>
+                <h4>Navigation</h4>
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="browse.html">Search &amp; Browse Catalog</a></li>
-                    <li><a href="report.html">Report Lost/Found Item</a></li>
+                    <li><a href="browse.html">Catalog Search</a></li>
+                    <li><a href="report.html">Report Property</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Top Categories</h4>
+                <h4>Categories</h4>
                 <ul class="footer-links">
-                    <li><a href="browse.html?category=electronics">📱 Electronics &amp; Gadgets</a></li>
-                    <li><a href="browse.html?category=wallets">👛 Wallets &amp; Purses</a></li>
-                    <li><a href="browse.html?category=keys">🔑 Keys &amp; Keychains</a></li>
-                    <li><a href="browse.html?category=documents">🪪 Cards &amp; Documents</a></li>
+                    <li><a href="browse.html?category=electronics">Electronics</a></li>
+                    <li><a href="browse.html?category=wallets">Wallets &amp; Bags</a></li>
+                    <li><a href="browse.html?category=keys">Keys &amp; Fobs</a></li>
+                    <li><a href="browse.html?category=documents">Documents &amp; IDs</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Safety Notice</h4>
+                <h4>Security Notice</h4>
                 <p class="footer-text">
-                    Always arrange exchanges in public, well-lit spaces like campus security desks or police station lobbies. Verify ownership before handing over valuables.
+                    Arrange all physical handovers in verified public locations or campus security desks. Confirm proof of ownership before relinquishing property.
                 </p>
             </div>
         </div>
 
         <div class="footer-bottom">
             <div class="footer-container">
-                <p>&copy; 2026 FindIt Lost &amp; Found Portal.</p>
+                <p>&copy; 2026 FindIt Portal. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="browse.html?type=lost">Lost Items</a>
-                    <a href="browse.html?type=found">Found Items</a>
-                    <a href="browse.html?type=claimed">Resolved</a>
+                    <a href="browse.html?type=lost">Lost Records</a>
+                    <a href="browse.html?type=found">Found Records</a>
+                    <a href="browse.html?type=claimed">Resolved Cases</a>
                 </div>
             </div>
         </div>

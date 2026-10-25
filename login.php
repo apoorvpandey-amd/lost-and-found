@@ -59,17 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <main class="main-wrapper">
-    <div class="form-container" style="max-width: 480px; margin-top: 3rem;">
+    <div class="form-container" style="max-width: 440px; margin-top: 3.5rem;">
         <div class="form-header">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔐</div>
-            <h1>Welcome Back</h1>
-            <p>Log in to manage your reports, respond to claims, and track lost belongings.</p>
+            <h1>Account Access</h1>
+            <p>Sign in to manage your reports, respond to claims, and track lost belongings.</p>
         </div>
 
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
-                <span class="alert-icon">⚠️</span>
                 <div class="alert-content">
                     <?php if (isset($errors['login'])): ?>
                         <?= htmlspecialchars($errors['login']) ?>

@@ -90,16 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <main class="main-wrapper">
-    <div class="form-container" style="max-width: 520px; margin-top: 2.5rem;">
+    <div class="form-container" style="max-width: 480px; margin-top: 3.5rem;">
         <div class="form-header">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👋</div>
-            <h1>Create Free Account</h1>
-            <p>Join FindIt to report items, track status updates, and verify claims.</p>
+            <h1>Create an Account</h1>
+            <p>Register with FindIt to maintain your property listings and receive direct claim notifications.</p>
         </div>
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
-                <span class="alert-icon">⚠️</span>
                 <div class="alert-content">
                     <strong>Registration incomplete:</strong>
                     <ul style="margin-top: 0.4rem; padding-left: 1.25rem;">

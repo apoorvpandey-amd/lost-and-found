@@ -143,13 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="form-container">
         <div class="form-header">
-            <h1>📢 Submit a Report</h1>
+            <h1>Submit an Item Report</h1>
             <p>Provide accurate details to maximize chances of finding or returning the item.</p>
         </div>
 
         <?php if (!is_logged_in()): ?>
             <div class="alert alert-info" style="margin-bottom: 2rem;">
-                <span class="alert-icon">💡</span>
                 <div class="alert-content">
                     Posting as guest. <a href="login.php?redirect=report.php" style="font-weight: 700; text-decoration: underline;">Sign In</a> or <a href="register.php" style="font-weight: 700; text-decoration: underline;">Register an account</a> to easily edit, update, or remove your reports anytime.
                 </div>
@@ -158,7 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
-                <span class="alert-icon">⚠️</span>
                 <div class="alert-content">
                     <strong>Please correct the following errors:</strong>
                     <ul style="margin-top: 0.5rem; padding-left: 1.25rem;">
@@ -176,15 +174,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Item Type Selection -->
             <div class="type-selector">
-                <label class="type-option-label lost-option">
-                    <input type="radio" name="type" value="lost" <?= ($type === 'lost') ? 'checked' : '' ?> onchange="updateTypeColor(this)">
-                    <span>🔴 I Lost Something</span>
+                <label class="type-option-label">
+                    <input type="radio" name="type" value="lost" <?= ($type === 'lost') ? 'checked' : '' ?>>
+                    <span>Lost Property</span>
                     <span class="sub-text">Report a lost personal belonging</span>
                 </label>
 
-                <label class="type-option-label found-option">
-                    <input type="radio" name="type" value="found" <?= ($type === 'found') ? 'checked' : '' ?> onchange="updateTypeColor(this)">
-                    <span>🟢 I Found Something</span>
+                <label class="type-option-label">
+                    <input type="radio" name="type" value="found" <?= ($type === 'found') ? 'checked' : '' ?>>
+                    <span>Found Property</span>
                     <span class="sub-text">Report an item you discovered</span>
                 </label>
             </div>
@@ -246,9 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group full-width">
                     <label class="form-label">Upload Photo (Optional)</label>
                     <div class="file-upload-box">
-                        <div class="upload-icon">📷</div>
-                        <p style="font-weight: 600; margin-bottom: 0.25rem;">Click or drag an image here to upload</p>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Supports JPG, PNG, WEBP, GIF (Max: 5MB)</p>
+                        <svg class="upload-icon-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                        </svg>
+                        <p style="font-weight: 500; font-size: 0.875rem; margin-bottom: 0.2rem; color: var(--text-main);">Click or drag an image here to upload</p>
+                        <p style="font-size: 0.78rem; color: var(--text-muted);">Supports JPG, PNG, WEBP, GIF (Max: 5MB)</p>
                         <input type="file" id="item_image" name="item_image" accept="image/jpeg,image/png,image/webp,image/gif">
                     </div>
 
@@ -293,10 +293,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Submit Button & Cancel -->
             <div style="margin-top: 2rem; display: flex; gap: 1rem; align-items: center;">
-                <button type="submit" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
-                    🚀 Publish Item Report
+                <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1.75rem;">
+                    Submit Report
                 </button>
-                <a href="index.php" class="btn btn-secondary" style="padding: 0.85rem 1.5rem;">
+                <a href="index.html" class="btn btn-secondary">
                     Cancel
                 </a>
             </div>

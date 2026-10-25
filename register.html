@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create an Account - FindIt</title>
+    <title>Register Account - FindIt</title>
     <meta name="description" content="Register an account on FindIt to manage your lost and found listings.">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
@@ -13,7 +13,7 @@
     <header class="header">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <div class="logo-icon">🔍</div>
+                <div class="logo-icon">F</div>
                 <span>FindIt</span>
             </a>
 
@@ -27,8 +27,8 @@
             <nav class="nav-menu" id="navMenu">
                 <ul class="nav-links">
                     <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="browse.html" class="nav-link">Browse &amp; Search</a></li>
-                    <li><a href="report.html" class="btn btn-primary btn-sm"><span>+</span> Report an Item</a></li>
+                    <li><a href="browse.html" class="nav-link">Search Catalog</a></li>
+                    <li><a href="report.html" class="btn btn-primary btn-sm">Report Item</a></li>
                     <li><a href="login.html" class="nav-link">Sign In</a></li>
                     <li><a href="register.html" class="btn btn-secondary btn-sm active">Register</a></li>
                 </ul>
@@ -37,24 +37,23 @@
     </header>
 
     <main class="main-wrapper">
-        <div class="form-container" style="max-width: 520px; margin-top: 3rem;">
+        <div class="form-container" style="max-width: 480px; margin-top: 3.5rem;">
             <div class="form-header">
-                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📝</div>
                 <h1>Create an Account</h1>
-                <p>Join the FindIt recovery community to easily manage your reports and get notified of claims.</p>
+                <p>Register with FindIt to maintain your property listings and receive direct claim notifications.</p>
             </div>
 
             <form action="register.php" method="POST" class="needs-validation" novalidate>
                 <!-- Full Name -->
                 <div class="form-group">
                     <label class="form-label" for="name">Full Name <span class="required">*</span></label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Alex Morgan" required minlength="2">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="First and Last Name" required minlength="2">
                 </div>
 
                 <!-- Email Address -->
                 <div class="form-group">
                     <label class="form-label" for="email">Email Address <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="alex@example.com" required>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="name@domain.com" required>
                 </div>
 
                 <!-- Phone Number -->
@@ -66,7 +65,7 @@
                 <!-- Password -->
                 <div class="form-group">
                     <label class="form-label" for="password">Password <span class="required">*</span></label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="At least 6 characters" required minlength="6">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
                 </div>
 
                 <!-- Confirm Password -->
@@ -76,15 +75,15 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
-                        Register Account
+                <div style="margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">
+                        Create Account
                     </button>
                 </div>
             </form>
 
-            <div style="text-align: center; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); font-size: 0.9rem;">
-                Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 700;">Sign in here</a>
+            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                Already registered? <a href="login.html" style="color: var(--primary); font-weight: 600;">Sign in here</a>
             </div>
         </div>
     </main>
@@ -93,10 +92,10 @@
     <footer class="footer">
         <div class="footer-bottom">
             <div class="footer-container">
-                <p>&copy; 2026 FindIt Lost &amp; Found Portal.</p>
+                <p>&copy; 2026 FindIt Portal. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="index.html">Home</a>
-                    <a href="browse.html">Browse</a>
+                    <a href="browse.html">Catalog</a>
                     <a href="report.html">Report</a>
                 </div>
             </div>

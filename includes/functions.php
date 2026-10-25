@@ -64,15 +64,15 @@ function sanitize($data) {
 // Categories List
 function get_categories() {
     return [
-        'electronics' => ['label' => 'Electronics & Gadgets', 'icon' => '📱'],
-        'wallets'     => ['label' => 'Wallets & Purses',     'icon' => '👛'],
-        'keys'        => ['label' => 'Keys & Keychains',     'icon' => '🔑'],
-        'documents'   => ['label' => 'Cards & Documents',    'icon' => '🪪'],
-        'clothing'    => ['label' => 'Clothing & Eyewear',   'icon' => '👓'],
-        'pets'        => ['label' => 'Pets & Animals',       'icon' => '🐾'],
-        'books'       => ['label' => 'Books & Notebooks',    'icon' => '📚'],
-        'jewelry'     => ['label' => 'Jewelry & Watches',    'icon' => '⌚'],
-        'other'       => ['label' => 'Other Belongings',     'icon' => '📦']
+        'electronics' => ['label' => 'Electronics & Gadgets', 'icon' => ''],
+        'wallets'     => ['label' => 'Wallets & Purses',     'icon' => ''],
+        'keys'        => ['label' => 'Keys & Keychains',     'icon' => ''],
+        'documents'   => ['label' => 'Cards & Documents',    'icon' => ''],
+        'clothing'    => ['label' => 'Clothing & Eyewear',   'icon' => ''],
+        'pets'        => ['label' => 'Pets & Animals',       'icon' => ''],
+        'books'       => ['label' => 'Books & Notebooks',    'icon' => ''],
+        'jewelry'     => ['label' => 'Jewelry & Watches',    'icon' => ''],
+        'other'       => ['label' => 'Other Belongings',     'icon' => '']
     ];
 }
 
@@ -82,8 +82,7 @@ function get_category_label($key) {
 }
 
 function get_category_icon($key) {
-    $cats = get_categories();
-    return $cats[$key]['icon'] ?? '📦';
+    return '';
 }
 
 // Time Ago Formatter

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse &amp; Search - FindIt</title>
+    <title>Search Catalog - FindIt</title>
     <meta name="description" content="Search and browse all reported lost and found items.">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
@@ -15,7 +15,7 @@
     <header class="header">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <div class="logo-icon">🔍</div>
+                <div class="logo-icon">F</div>
                 <span>FindIt</span>
             </a>
 
@@ -29,8 +29,8 @@
             <nav class="nav-menu" id="navMenu">
                 <ul class="nav-links">
                     <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="browse.html" class="nav-link active">Browse &amp; Search</a></li>
-                    <li><a href="report.html" class="btn btn-primary btn-sm"><span>+</span> Report an Item</a></li>
+                    <li><a href="browse.html" class="nav-link active">Search Catalog</a></li>
+                    <li><a href="report.html" class="btn btn-primary btn-sm">Report Item</a></li>
                     <li><a href="login.html" class="nav-link">Sign In</a></li>
                     <li><a href="register.html" class="btn btn-secondary btn-sm">Register</a></li>
                 </ul>
@@ -46,26 +46,26 @@
         <div class="breadcrumbs">
             <a href="index.html">Home</a>
             <span class="divider">/</span>
-            <span>Search &amp; Browse</span>
+            <span>Search Catalog</span>
         </div>
 
         <!-- Search & Filter Controls Card -->
-        <div style="background: #ffffff; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); padding: 1.75rem; margin-bottom: 2rem;">
-            <h1 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.25rem;">
-                🔍 Search &amp; Filter Database
+        <div style="background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-xs); padding: 1.5rem; margin-bottom: 1.75rem;">
+            <h1 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-main);">
+                Search Database
             </h1>
 
             <form id="browseFilterForm" onsubmit="event.preventDefault(); applyBrowseFilters();">
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 0.85rem; align-items: end;">
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 0.75rem; align-items: end;">
                     <!-- Keyword Query -->
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label class="form-label" for="browseSearchInput">Keyword / Description / Place</label>
-                        <input type="text" id="browseSearchInput" class="form-control" placeholder="Search keywords...">
+                        <label class="form-label" for="browseSearchInput">Keyword / Place</label>
+                        <input type="text" id="browseSearchInput" class="form-control" placeholder="Search title, description, location...">
                     </div>
 
                     <!-- Type Selector -->
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label class="form-label" for="browseTypeSelect">Item Type</label>
+                        <label class="form-label" for="browseTypeSelect">Status / Type</label>
                         <select id="browseTypeSelect" class="form-control">
                             <option value="all">All Items</option>
                             <option value="lost">Lost Only</option>
@@ -79,21 +79,21 @@
                         <label class="form-label" for="browseCategorySelect">Category</label>
                         <select id="browseCategorySelect" class="form-control">
                             <option value="all">All Categories</option>
-                            <option value="electronics">📱 Electronics &amp; Gadgets</option>
-                            <option value="wallets">👛 Wallets &amp; Purses</option>
-                            <option value="keys">🔑 Keys &amp; Keychains</option>
-                            <option value="documents">🪪 Cards &amp; Documents</option>
-                            <option value="clothing">👓 Clothing &amp; Eyewear</option>
-                            <option value="pets">🐾 Pets &amp; Animals</option>
-                            <option value="books">📚 Books &amp; Notebooks</option>
-                            <option value="jewelry">⌚ Jewelry &amp; Watches</option>
-                            <option value="other">📦 Other Belongings</option>
+                            <option value="electronics">Electronics &amp; Gadgets</option>
+                            <option value="wallets">Wallets &amp; Purses</option>
+                            <option value="keys">Keys &amp; Keychains</option>
+                            <option value="documents">Cards &amp; Documents</option>
+                            <option value="clothing">Clothing &amp; Eyewear</option>
+                            <option value="pets">Pets &amp; Animals</option>
+                            <option value="books">Books &amp; Notebooks</option>
+                            <option value="jewelry">Jewelry &amp; Watches</option>
+                            <option value="other">Other Belongings</option>
                         </select>
                     </div>
 
                     <!-- Sorting -->
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label class="form-label" for="browseSortSelect">Sort By</label>
+                        <label class="form-label" for="browseSortSelect">Sort Order</label>
                         <select id="browseSortSelect" class="form-control">
                             <option value="newest">Newest First</option>
                             <option value="oldest">Oldest First</option>
@@ -101,12 +101,12 @@
                     </div>
 
                     <!-- Submit / Reset Buttons -->
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button type="submit" class="btn btn-primary" style="height: 42px;">
+                    <div style="display: flex; gap: 0.4rem;">
+                        <button type="submit" class="btn btn-primary" style="height: 38px;">
                             Filter
                         </button>
-                        <button type="button" id="browseResetBtn" class="btn btn-secondary" style="height: 42px;" title="Reset filters">
-                            ✕
+                        <button type="button" id="browseResetBtn" class="btn btn-secondary" style="height: 38px;" title="Reset filters">
+                            Reset
                         </button>
                     </div>
                 </div>
@@ -115,10 +115,10 @@
 
         <!-- Results Header -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-            <p style="font-size: 1rem; color: var(--text-muted);">
-                Showing <strong id="browseResultsCount">all items</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Showing <strong id="browseResultsCount" style="color: var(--text-main);">all items</strong>
             </p>
-            <a href="report.html" class="btn btn-secondary btn-sm">+ Post Missing Item</a>
+            <a href="report.html" class="btn btn-secondary btn-sm">+ Post Item</a>
         </div>
 
         <!-- Items Grid -->
@@ -146,36 +146,36 @@
                 <button type="button" class="modal-close-btn" data-close-modal title="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-                    You are claiming: <strong id="claimModalItemTitle" style="color: var(--text-main);">this item</strong>. Please provide your contact info and proof of ownership.
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                    Inquiry regarding: <strong id="claimModalItemTitle" style="color: var(--text-main);">this item</strong>. Provide contact details and ownership verification.
                 </p>
 
                 <form id="claimForm">
                     <input type="hidden" id="claimItemId" name="item_id" value="">
 
                     <div class="form-group">
-                        <label class="form-label" for="claimantName">Your Full Name <span class="required">*</span></label>
-                        <input type="text" id="claimantName" name="claimant_name" class="form-control" placeholder="John Doe" required>
+                        <label class="form-label" for="claimantName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="claimantName" name="claimant_name" class="form-control" placeholder="Full Name" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="claimantEmail">Your Email Address <span class="required">*</span></label>
-                        <input type="email" id="claimantEmail" name="claimant_email" class="form-control" placeholder="john@example.com" required>
+                        <label class="form-label" for="claimantEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="claimantEmail" name="claimant_email" class="form-control" placeholder="name@example.com" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="claimantPhone">Phone Number (Optional)</label>
+                        <label class="form-label" for="claimantPhone">Phone Number</label>
                         <input type="tel" id="claimantPhone" name="claimant_phone" class="form-control" placeholder="+1 (555) 000-0000">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="claimMessage">Proof of Ownership / Message <span class="required">*</span></label>
-                        <textarea id="claimMessage" name="claim_message" class="form-control" rows="3" placeholder="Describe unique identifying features, lock screen image, purchase receipt, serial number..." required></textarea>
+                        <label class="form-label" for="claimMessage">Proof of Ownership / Details <span class="required">*</span></label>
+                        <textarea id="claimMessage" name="claim_message" class="form-control" rows="3" placeholder="Provide distinct identifiers, serial numbers, invoice details, or specific marks..." required></textarea>
                     </div>
 
-                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
-                        <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
-                        <button type="submit" class="btn btn-primary">Send Claim Inquiry</button>
+                    <div style="display: flex; gap: 0.65rem; justify-content: flex-end; margin-top: 1.25rem;">
+                        <button type="button" class="btn btn-secondary btn-sm" data-close-modal>Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Submit Claim</button>
                     </div>
                 </form>
             </div>
@@ -187,48 +187,48 @@
         <div class="footer-top">
             <div class="footer-col">
                 <div class="footer-logo">
-                    <span class="logo-icon">🔍</span>
-                    <strong>FindIt Portal</strong>
+                    <span class="logo-icon">F</span>
+                    <span>FindIt Recovery Network</span>
                 </div>
                 <p class="footer-tagline">
-                    An open community platform dedicated to helping people recover lost items, report discovered belongings, and connect securely.
+                    An open community platform dedicated to helping individuals recover lost property, log discovered items, and facilitate secure returns.
                 </p>
             </div>
 
             <div class="footer-col">
-                <h4>Quick Navigation</h4>
+                <h4>Navigation</h4>
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="browse.html">Search &amp; Browse Catalog</a></li>
-                    <li><a href="report.html">Report Lost/Found Item</a></li>
+                    <li><a href="browse.html">Catalog Search</a></li>
+                    <li><a href="report.html">Report Property</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Top Categories</h4>
+                <h4>Categories</h4>
                 <ul class="footer-links">
-                    <li><a href="browse.html?category=electronics">📱 Electronics &amp; Gadgets</a></li>
-                    <li><a href="browse.html?category=wallets">👛 Wallets &amp; Purses</a></li>
-                    <li><a href="browse.html?category=keys">🔑 Keys &amp; Keychains</a></li>
-                    <li><a href="browse.html?category=documents">🪪 Cards &amp; Documents</a></li>
+                    <li><a href="browse.html?category=electronics">Electronics</a></li>
+                    <li><a href="browse.html?category=wallets">Wallets &amp; Bags</a></li>
+                    <li><a href="browse.html?category=keys">Keys &amp; Fobs</a></li>
+                    <li><a href="browse.html?category=documents">Documents &amp; IDs</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Safety Notice</h4>
+                <h4>Security Notice</h4>
                 <p class="footer-text">
-                    Always arrange exchanges in public, well-lit spaces like campus security desks or police station lobbies. Verify ownership before handing over valuables.
+                    Arrange all physical handovers in verified public locations or campus security desks. Confirm proof of ownership before relinquishing property.
                 </p>
             </div>
         </div>
 
         <div class="footer-bottom">
             <div class="footer-container">
-                <p>&copy; 2026 FindIt Lost &amp; Found Portal.</p>
+                <p>&copy; 2026 FindIt Portal. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="browse.html?type=lost">Lost Items</a>
-                    <a href="browse.html?type=found">Found Items</a>
-                    <a href="browse.html?type=claimed">Resolved</a>
+                    <a href="browse.html?type=lost">Lost Records</a>
+                    <a href="browse.html?type=found">Found Records</a>
+                    <a href="browse.html?type=claimed">Resolved Cases</a>
                 </div>
             </div>
         </div>
@@ -240,10 +240,10 @@
             {
                 id: 7,
                 type: "lost",
-                title: "SP Shine 125 keys",
+                title: "SP Shine 125 Motorcycle Keys",
                 category: "keys",
-                description: "A silver coloured key chain with 2 other keys lost near the bike parking area.",
-                location: "Parking near CO",
+                description: "Silver key chain with 2 keys misplaced near parking facility.",
+                location: "West Parking Lot, Section C",
                 item_date: "2026-10-24",
                 image_url: null,
                 status: "active",
@@ -255,8 +255,8 @@
                 type: "lost",
                 title: "Brown Leather Bi-fold Wallet",
                 category: "wallets",
-                description: "Lost vintage brown leather wallet during lunch hour. Contains driver license and cards.",
-                location: "University Cafeteria, Booth 12",
+                description: "Vintage leather wallet with driver license and transit pass.",
+                location: "Central Dining Hall, Table 12",
                 item_date: "2026-10-11",
                 image_url: null,
                 status: "active",
@@ -268,8 +268,8 @@
                 type: "found",
                 title: "Calculus & Linear Algebra Textbook (9th Ed)",
                 category: "books",
-                description: "Hardcover university math textbook left on row 3 desk. Has yellow highlighter markings.",
-                location: "Science Complex, Lecture Hall B",
+                description: "Hardcover university mathematics textbook left in row 3.",
+                location: "Science Lecture Hall B",
                 item_date: "2026-10-09",
                 image_url: null,
                 status: "claimed",
