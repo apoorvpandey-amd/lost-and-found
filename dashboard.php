@@ -2,12 +2,12 @@
 /**
  * FindIt - User Dashboard
  * Complete management portal: view my posts, edit, delete, toggle status, and review claims.
+ * Enforces compulsory login to safeguard member items.
  */
-$pageTitle = 'My Dashboard';
 require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/includes/header.php';
 
-require_login(); // Session guard
+// Enforce Compulsory Login
+require_login();
 
 $pdo = getDbConnection();
 $user = current_user();
@@ -41,6 +41,8 @@ $pendingClaims = 0;
 foreach ($incomingClaims as $c) {
     if ($c['status'] === 'pending') $pendingClaims++;
 }
+
+render_header('My Dashboard', 'dashboard');
 ?>
 
 <main class="main-wrapper">
@@ -78,24 +80,24 @@ foreach ($incomingClaims as $c) {
         </div>
         <div class="stat-card">
             <span class="stat-number" style="color: var(--lost-color);"><?= $activeItems ?></span>
-            <span class="stat-label">Active Items</span>
+            <span class="stat-label">Active / Searching</span>
         </div>
         <div class="stat-card">
-            <span class="stat-number" style="color: var(--found-color);"><?= $resolvedItems ?></span>
-            <span class="stat-label">Resolved / Reunited</span>
+            <span class="stat-number" style="color: var(--primary);"><?= $resolvedItems ?></span>
+            <span class="stat-label">Reunited / Resolved</span>
         </div>
         <div class="stat-card">
-            <span class="stat-number" style="color: #f59e0b;"><?= $pendingClaims ?></span>
+            <span class="stat-number" style="color: var(--warning);"><?= $pendingClaims ?></span>
             <span class="stat-label">Pending Inquiries</span>
         </div>
     </div>
 
-    <!-- Section 1: My Reported Items Table (UPDATE & DELETE) -->
+    <!-- Section 1: My Reported Items -->
     <div style="margin-bottom: 3.5rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
             <div>
-                <h2 style="font-size: 1.5rem; font-weight: 800;">📋 My Reported Items</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">View, edit, toggle status, or remove items you've submitted.</p>
+                <h2 style="font-size: 1.5rem; font-weight: 800;">📋 My Reported Items (<?= $totalPosted ?>)</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Manage listings you reported, update their status, or edit description details.</p>
             </div>
             <a href="report.php" class="btn btn-primary btn-sm">+ Post New Item</a>
         </div>
@@ -104,8 +106,11 @@ foreach ($incomingClaims as $c) {
             <div class="empty-state">
                 <div class="empty-state-icon">📝</div>
                 <h3>You Haven't Reported Any Items Yet</h3>
-                <p>Have you lost a personal possession or found someone else's belonging?</p>
-                <a href="report.php" class="btn btn-primary">Report an Item Now</a>
+                <p>Have you lost something or discovered an item? Submit a report now to connect with the community.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.25rem;">
+                    <a href="report.php?type=lost" class="btn btn-danger btn-sm">Report Lost Item</a>
+                    <a href="report.php?type=found" class="btn btn-success btn-sm">Report Found Item</a>
+                </div>
             </div>
         <?php else: ?>
             <div class="table-container">
@@ -115,7 +120,7 @@ foreach ($incomingClaims as $c) {
                             <th>Item Details</th>
                             <th>Type</th>
                             <th>Category</th>
-                            <th>Date / Place</th>
+                            <th>Date &amp; Place</th>
                             <th>Status</th>
                             <th style="text-align: right;">Actions</th>
                         </tr>
@@ -129,7 +134,7 @@ foreach ($incomingClaims as $c) {
                                             <img src="<?= UPLOAD_WEB_PATH . htmlspecialchars($item['image_path']) ?>" alt="" style="width: 46px; height: 46px; object-fit: cover; border-radius: var(--radius-sm);">
                                         <?php else: ?>
                                             <div style="width: 46px; height: 46px; background: #e2e8f0; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-                                                <?= get_category_icon($item['category']) ?>
+                                                📦
                                             </div>
                                         <?php endif; ?>
                                         <div>
@@ -163,21 +168,21 @@ foreach ($incomingClaims as $c) {
                                         <a href="item.php?id=<?= $item['id'] ?>" class="btn btn-secondary btn-sm" title="View details">
                                             👁️ View
                                         </a>
-                                        <a href="edit_item.php?id=<?= $item['id'] ?>" class="btn btn-secondary btn-sm" title="Edit details">
+                                        <a href="report.php?id=<?= $item['id'] ?>" class="btn btn-secondary btn-sm" title="Edit details">
                                             ✏️ Edit
                                         </a>
 
                                         <?php if ($item['status'] === 'active'): ?>
-                                            <a href="update_status.php?id=<?= $item['id'] ?>&status=claimed&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" style="color: #059669;" title="Mark as resolved">
+                                            <a href="item.php?id=<?= $item['id'] ?>&action=status&status=claimed&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" style="color: #059669;" title="Mark as resolved" onclick="return confirm('Mark this item as resolved?')">
                                                 ✓ Resolve
                                             </a>
                                         <?php else: ?>
-                                            <a href="update_status.php?id=<?= $item['id'] ?>&status=active&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" title="Reactivate item">
+                                            <a href="item.php?id=<?= $item['id'] ?>&action=status&status=active&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" title="Reactivate item" onclick="return confirm('Re-activate this item?')">
                                                 🔄 Reactivate
                                             </a>
                                         <?php endif; ?>
 
-                                        <a href="delete_item.php?id=<?= $item['id'] ?>&csrf=<?= generate_csrf_token() ?>" class="btn btn-danger btn-sm confirm-delete" data-title="<?= htmlspecialchars($item['title']) ?>" title="Delete record">
+                                        <a href="item.php?id=<?= $item['id'] ?>&action=delete&csrf=<?= generate_csrf_token() ?>" class="btn btn-danger btn-sm" title="Delete record" onclick="return confirm('Permanently remove this report?');">
                                             🗑️
                                         </a>
                                     </div>
@@ -190,7 +195,7 @@ foreach ($incomingClaims as $c) {
         <?php endif; ?>
     </div>
 
-    <!-- Section 2: Incoming Claims / Inquiries (UPDATE & RESOLVE) -->
+    <!-- Section 2: Incoming Claims / Inquiries -->
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
             <div>
@@ -251,10 +256,10 @@ foreach ($incomingClaims as $c) {
                                 </td>
                                 <td style="text-align: right; white-space: nowrap;">
                                     <?php if ($claim['status'] === 'pending'): ?>
-                                        <a href="update_status.php?claim_id=<?= $claim['id'] ?>&claim_status=approved&csrf=<?= generate_csrf_token() ?>" class="btn btn-success btn-sm" onclick="return confirm('Approve this claim? This will resolve the item.')">
+                                        <a href="item.php?action=claim_status&claim_id=<?= $claim['id'] ?>&claim_status=approved&csrf=<?= generate_csrf_token() ?>" class="btn btn-success btn-sm" onclick="return confirm('Approve this claim? This will resolve the item.')">
                                             ✓ Approve
                                         </a>
-                                        <a href="update_status.php?claim_id=<?= $claim['id'] ?>&claim_status=rejected&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" onclick="return confirm('Reject this claim?')">
+                                        <a href="item.php?action=claim_status&claim_id=<?= $claim['id'] ?>&claim_status=rejected&csrf=<?= generate_csrf_token() ?>" class="btn btn-secondary btn-sm" onclick="return confirm('Reject this claim?')">
                                             ✕ Reject
                                         </a>
                                     <?php else: ?>
@@ -270,4 +275,4 @@ foreach ($incomingClaims as $c) {
     </div>
 </main>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php render_footer(); ?>

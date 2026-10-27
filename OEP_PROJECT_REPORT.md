@@ -65,10 +65,10 @@ The database consists of three primary interconnected tables:
 
 | Operation | Feature Description | Code Implementation |
 |---|---|---|
-| **INSERT** | Submitting lost/found item reports with photo uploads; submitting ownership claims; registering new user accounts. | `report.php`, `report.html`, `api.php?action=create_item`, `api.php?action=submit_claim`, `register.php` |
-| **SEARCH** | Multi-attribute keyword search across titles, descriptions, and locations with real-time category filtering and date sorting. | `browse.html`, `browse.php`, `api.php?action=get_items` |
-| **UPDATE** | Modifying existing listings, changing item lifecycle status (*Active* &rarr; *Claimed* &rarr; *Returned*), and processing claim outcomes. | `edit_item.php`, `update_status.php`, `dashboard.php` |
-| **DELETE** | Permanently deleting reports with automated cascade cleanup of associated claims and uploaded server images. | `delete_item.php` |
+| **INSERT** | Submitting lost/found item reports with photo uploads; submitting ownership claims; registering new user accounts. | `report.php`, `login.php?action=register`, `api.php?action=create_item`, `item.php?action=submit_claim` |
+| **SEARCH** | Multi-attribute keyword search across titles, descriptions, and locations with real-time category filtering and date sorting. | `browse.php`, `index.php`, `api.php?action=get_items` |
+| **UPDATE** | Modifying existing listings, changing item lifecycle status (*Active* &rarr; *Claimed* &rarr; *Returned*), and processing claim outcomes. | `report.php?id=...`, `item.php?action=status`, `item.php?action=claim_status`, `dashboard.php` |
+| **DELETE** | Permanently deleting reports with automated cascade cleanup of associated claims and uploaded server images. | `item.php?action=delete` |
 
 ---
 

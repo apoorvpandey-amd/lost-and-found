@@ -38,13 +38,13 @@ The frontend is structured around **clean HTML files** (`index.html`, `browse.ht
   - `action=create_item`: Post new lost/found reports directly via AJAX or FormData.
   - `action=get_item`: Fetch single item details by ID.
 - **`index.php`**:
-  - Clean lightweight server bridge that serves `index.html` seamlessly on any PHP server (`localhost:8000/`).
+  - Flagship entry point with compulsory login verification, live statistics counters, and recent reports.
 
 ### 3. Database Operations (Full CRUD)
-- **INSERT**: Report items (`report.html` / `report.php`), submit claims (`api.php`), and create accounts (`register.html` / `register.php`).
-- **SEARCH**: Live search across titles, descriptions, and locations (`browse.html`).
-- **UPDATE**: Edit reports, upload photos, and update status (`edit_item.php`, `update_status.php`).
-- **DELETE**: Remove reports with cascade cleanup of associated claims and uploaded images (`delete_item.php`).
+- **INSERT**: Report items (`report.php`), submit claims (`item.php`), and create accounts (`login.php?action=register`).
+- **SEARCH**: Live search across titles, descriptions, and locations (`browse.php`, `index.php`).
+- **UPDATE**: Edit reports, upload photos, and update status (`report.php?id=...`, `item.php?action=status`).
+- **DELETE**: Remove reports with cascade cleanup of associated claims and uploaded images (`item.php?action=delete`).
 
 ---
 
@@ -72,39 +72,29 @@ Then navigate to:
 http://localhost:8000
 ```
 
-> **Database Note:** Uses **SQLite** (`lost_and_found.db`) out-of-the-box with zero setup required. You can also switch to MySQL in `config.php` if desired.
+> **Database Note:** Uses **SQLite** (`lost_and_found.db`) out-of-the-box with zero setup required. You can also switch to MySQL in `db.php` if desired.
 
 ---
 
-## 📁 Project Directory Structure
+## 📁 Project Directory Structure (Consolidated & Streamlined)
 
 ```
 lost_and_found/
-├── index.html                  # Main HTML5 landing page (Hero, stats, cards, modals)
-├── browse.html                 # Dedicated HTML search & filter catalog
-├── report.html                 # Clean HTML report submission form with photo upload
-├── login.html                  # HTML user sign-in page
-├── register.html               # HTML user registration page
-├── index.php                   # Lightweight server bridge (serves index.html)
-├── api.php                     # RESTful JSON API endpoints
-├── config.php                  # Database settings, upload paths & session settings
-├── db.php                      # SQLite/MySQL PDO database connection helper
+├── index.php                   # Flagship Portal Home (Compulsory login, stats, hero, category feed)
+├── login.php                   # Unified Authentication (Sign In, Registration, Logout with demo credentials)
+├── browse.php                  # Advanced Catalog Search & Multi-filter browser
+├── report.php                  # Unified Form: Post New Item (INSERT) & Edit Listing (UPDATE)
+├── item.php                    # Detailed Item View, Claim Submissions, Status Toggling & Deletions (CRUD)
+├── dashboard.php               # Member Dashboard (Manage reports, review claims)
+├── admin.php                   # Administrator Control Panel (Platform metrics, oversight)
+├── api.php                     # RESTful JSON API endpoints (Secured with session authentication)
+├── db.php                      # Unified Backend Core (Config, SQLite/PDO, Auth, Layout renderers)
 ├── database.sql                # MySQL schema backup
-├── start-server.bat            # 1-click startup script
+├── start-server.bat            # 1-click startup script (Launches local server to index.php)
 ├── css/
 │   └── style.css               # Clean, modern, responsive CSS styling
 ├── js/
 │   ├── app.js                  # Modals, live filtering, dynamic API fetch, toasts
 │   └── validation.js           # Client-side form validation & live image preview
-├── includes/
-│   ├── auth.php                # Session & authentication checks
-│   ├── functions.php           # Helper utilities, sanitization & image upload handler
-│   ├── header.php              # Shared PHP header component (for dashboard/admin)
-│   └── footer.php              # Shared PHP footer component
-├── edit_item.php               # Backend edit item handler
-├── delete_item.php             # Backend item deletion handler
-├── update_status.php           # Status toggler
-├── dashboard.php               # User item management portal
-├── admin.php                   # Administrative oversight panel
 └── uploads/                    # User-uploaded photos
 ```

@@ -1,11 +1,13 @@
 <?php
 /**
  * FindIt - Browse & Search Catalog
- * Implements full database SEARCH functionality across keywords, types, and categories.
+ * Implements full database search across keywords, types, and categories.
+ * Enforces compulsory login to safeguard community listings.
  */
-$pageTitle = 'Browse & Search Items';
 require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/includes/header.php';
+
+// Enforce Compulsory Login
+require_login();
 
 $pdo = getDbConnection();
 
@@ -58,6 +60,7 @@ $items = $stmt->fetchAll();
 $totalFound = count($items);
 
 $categories = get_categories();
+render_header('Search & Browse Catalog', 'browse');
 ?>
 
 <main class="main-wrapper" style="margin-top: 1.5rem;">
@@ -75,7 +78,7 @@ $categories = get_categories();
         </h1>
 
         <form action="browse.php" method="GET" class="search-form">
-            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 0.85rem; align-items: end;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto; gap: 0.85rem; align-items: end;">
                 <!-- Keyword Query -->
                 <div class="form-group" style="margin-bottom: 0;">
                     <label class="form-label">Keyword / Description / Place</label>
@@ -98,31 +101,31 @@ $categories = get_categories();
                     <label class="form-label">Category</label>
                     <select name="category" class="form-control">
                         <option value="all" <?= ($category === 'all') ? 'selected' : '' ?>>All Categories</option>
-                        <?php foreach ($categories as $catKey => $catData): ?>
-                            <option value="<?= htmlspecialchars($catKey) ?>" <?= ($category === $catKey) ? 'selected' : '' ?>>
-                                <?= $catData['icon'] ?> <?= htmlspecialchars($catData['label']) ?>
+                        <?php foreach ($categories as $slug => $cat): ?>
+                            <option value="<?= htmlspecialchars($slug) ?>" <?= ($category === $slug) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($cat['label']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
-                <!-- Sorting -->
+                <!-- Sort Selector -->
                 <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label">Sort By</label>
+                    <label class="form-label">Sort Order</label>
                     <select name="sort" class="form-control">
                         <option value="newest" <?= ($sort === 'newest') ? 'selected' : '' ?>>Newest First</option>
                         <option value="oldest" <?= ($sort === 'oldest') ? 'selected' : '' ?>>Oldest First</option>
                     </select>
                 </div>
 
-                <!-- Submit / Reset Buttons -->
+                <!-- Buttons -->
                 <div style="display: flex; gap: 0.5rem;">
-                    <button type="submit" class="btn btn-primary" style="height: 42px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1.25rem;">
                         Filter
                     </button>
-                    <?php if ($q !== '' || $type !== 'all' || $category !== 'all'): ?>
-                        <a href="browse.php" class="btn btn-secondary" style="height: 42px;" title="Reset filters">
-                            ✕
+                    <?php if (!empty($q) || $type !== 'all' || $category !== 'all' || $sort !== 'newest'): ?>
+                        <a href="browse.php" class="btn btn-secondary" style="padding: 0.65rem 1rem;" title="Reset filters">
+                            Clear
                         </a>
                     <?php endif; ?>
                 </div>
@@ -130,25 +133,37 @@ $categories = get_categories();
         </form>
     </div>
 
-    <!-- Results Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-        <p style="font-size: 1rem; color: var(--text-muted);">
-            Showing <strong><?= $totalFound ?></strong> <?= ($totalFound === 1) ? 'result' : 'results' ?> 
-            <?php if ($q !== ''): ?>for "<strong><?= htmlspecialchars($q) ?></strong>"<?php endif; ?>
-        </p>
-        <a href="report.php" class="btn btn-secondary btn-sm">+ Post Missing Item</a>
+    <!-- Results Status Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <span style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">
+                <?= $totalFound ?> <?= ($totalFound === 1) ? 'Record' : 'Records' ?> Found
+            </span>
+            <?php if (!empty($q)): ?>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">matching "<?= htmlspecialchars($q) ?>"</span>
+            <?php endif; ?>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem;">
+            <a href="browse.php?type=lost" class="btn <?= ($type === 'lost') ? 'btn-danger' : 'btn-secondary' ?> btn-sm">Lost</a>
+            <a href="browse.php?type=found" class="btn <?= ($type === 'found') ? 'btn-success' : 'btn-secondary' ?> btn-sm">Found</a>
+            <a href="browse.php?type=claimed" class="btn <?= ($type === 'claimed') ? 'btn-primary' : 'btn-secondary' ?> btn-sm">Resolved</a>
+            <a href="browse.php" class="btn <?= ($type === 'all') ? 'btn-primary' : 'btn-secondary' ?> btn-sm">All</a>
+        </div>
     </div>
 
     <!-- Items Grid -->
     <div class="items-grid">
-        <?php if ($totalFound === 0): ?>
-            <div class="empty-state">
-                <div class="empty-state-icon">🔎</div>
-                <h3>No Matching Records Found</h3>
-                <p>We couldn't find any reports matching your search criteria. Try different keywords or reset your filters.</p>
-                <div style="display: flex; gap: 0.75rem; justify-content: center;">
-                    <a href="browse.php" class="btn btn-secondary">Clear Search Filters</a>
-                    <a href="report.php" class="btn btn-primary">Report This Item</a>
+        <?php if (empty($items)): ?>
+            <div class="empty-state" style="grid-column: 1 / -1; padding: 4rem 2rem; background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+                <div style="font-size: 3.5rem; margin-bottom: 1rem;">🔍</div>
+                <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">No Matching Items Found</h3>
+                <p style="color: var(--text-muted); max-width: 450px; margin: 0 auto 1.5rem;">
+                    Try searching with broader terms or removing filter restrictions.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="browse.php" class="btn btn-secondary btn-sm">Clear All Filters</a>
+                    <a href="report.php" class="btn btn-primary btn-sm">+ Post a Report</a>
                 </div>
             </div>
         <?php else: ?>
@@ -158,8 +173,8 @@ $categories = get_categories();
                         <?php if (!empty($item['image_path']) && file_exists(UPLOAD_DIR . $item['image_path'])): ?>
                             <img src="<?= UPLOAD_WEB_PATH . htmlspecialchars($item['image_path']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" class="card-img">
                         <?php else: ?>
-                            <div class="card-placeholder-icon">
-                                <?= get_category_icon($item['category']) ?>
+                            <div class="card-placeholder-icon" style="font-size: 3rem; color: #94a3b8; display: flex; align-items: center; justify-content: center; height: 180px; background: #f1f5f9;">
+                                📦
                             </div>
                         <?php endif; ?>
 
@@ -173,7 +188,7 @@ $categories = get_categories();
                         <?php endif; ?>
 
                         <span class="category-tag">
-                            <?= get_category_icon($item['category']) ?> <?= htmlspecialchars(get_category_label($item['category'])) ?>
+                            <?= htmlspecialchars(get_category_label($item['category'])) ?>
                         </span>
                     </div>
 
@@ -190,7 +205,7 @@ $categories = get_categories();
                             </div>
                             <div class="meta-item">
                                 <span>📅</span>
-                                <span>Date: <?= htmlspecialchars($item['item_date']) ?> (<?= time_ago($item['created_at']) ?>)</span>
+                                <span><?= htmlspecialchars($item['item_date']) ?> (<?= time_ago($item['created_at']) ?>)</span>
                             </div>
                         </div>
 
@@ -211,4 +226,4 @@ $categories = get_categories();
     </div>
 </main>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php render_footer(); ?>

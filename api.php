@@ -1,10 +1,10 @@
 <?php
 /**
- * Lost & Found Portal - RESTful API Endpoints
- * Enables pure HTML/JS frontend to communicate with backend seamlessly.
+ * FindIt - RESTful API Services
+ * Provides JSON data endpoints for asynchronous client interactions.
+ * Enforces session authentication checks on write and update actions.
  */
 require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/includes/functions.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -45,7 +45,7 @@ switch ($action) {
         break;
 
     default:
-        echo json_encode(['success' => false, 'error' => 'Unknown action or endpoint not specified']);
+        echo json_encode(['success' => false, 'error' => 'Unknown endpoint action specified']);
         break;
 }
 
@@ -97,18 +97,13 @@ function handleGetItems($pdo) {
     $stmt->execute($params);
     $items = $stmt->fetchAll();
 
-    // Format items with category metadata
     $categories = get_categories();
     foreach ($items as &$item) {
         $catKey = $item['category'];
         $item['category_label'] = $categories[$catKey]['label'] ?? ucfirst($catKey);
         $item['category_icon'] = '';
         $item['time_ago'] = time_ago($item['created_at']);
-        if (!empty($item['image_path'])) {
-            $item['image_url'] = UPLOAD_WEB_PATH . $item['image_path'];
-        } else {
-            $item['image_url'] = null;
-        }
+        $item['image_url'] = !empty($item['image_path']) ? UPLOAD_WEB_PATH . $item['image_path'] : null;
     }
 
     echo json_encode(['success' => true, 'count' => count($items), 'data' => $items]);
@@ -135,11 +130,7 @@ function handleGetSingleItem($pdo) {
     $item['category_label'] = $categories[$catKey]['label'] ?? ucfirst($catKey);
     $item['category_icon'] = '';
     $item['time_ago'] = time_ago($item['created_at']);
-    if (!empty($item['image_path'])) {
-        $item['image_url'] = UPLOAD_WEB_PATH . $item['image_path'];
-    } else {
-        $item['image_url'] = null;
-    }
+    $item['image_url'] = !empty($item['image_path']) ? UPLOAD_WEB_PATH . $item['image_path'] : null;
 
     echo json_encode(['success' => true, 'data' => $item]);
 }
@@ -153,9 +144,9 @@ function handleGetStats($pdo) {
     echo json_encode([
         'success' => true,
         'stats' => [
-            'total' => (int)$total,
-            'lost' => (int)$lost,
-            'found' => (int)$found,
+            'total'    => (int)$total,
+            'lost'     => (int)$lost,
+            'found'    => (int)$found,
             'resolved' => (int)$resolved
         ]
     ]);
@@ -169,6 +160,13 @@ function handleGetCategories() {
 function handleSubmitClaim($pdo) {
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
         echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+        return;
+    }
+
+    // Require Login for Submitting Claims
+    if (!is_logged_in()) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'error' => 'You must log in to submit a claim inquiry.']);
         return;
     }
 
@@ -188,32 +186,32 @@ function handleSubmitClaim($pdo) {
         return;
     }
 
-    // Verify item exists
     $stmt = $pdo->prepare("SELECT id, title, type FROM items WHERE id = :id");
     $stmt->execute([':id' => $itemId]);
     $item = $stmt->fetch();
 
     if (!$item) {
-        echo json_encode(['success' => false, 'error' => 'The item you are claiming does not exist.']);
+        echo json_encode(['success' => false, 'error' => 'The target item does not exist.']);
         return;
     }
 
-    // Insert claim
+    $user = current_user();
     $stmt = $pdo->prepare("
-        INSERT INTO claims (item_id, claimant_name, claimant_email, claimant_phone, claim_message, status)
-        VALUES (:item_id, :claimant_name, :claimant_email, :claimant_phone, :claim_message, 'pending')
+        INSERT INTO claims (item_id, claimant_id, claimant_name, claimant_email, claimant_phone, claim_message, status)
+        VALUES (:item_id, :claimant_id, :claimant_name, :claimant_email, :claimant_phone, :claim_message, 'pending')
     ");
     $stmt->execute([
-        ':item_id' => $itemId,
-        ':claimant_name' => $name,
-        ':claimant_email' => $email,
-        ':claimant_phone' => $phone,
-        ':claim_message' => $message
+        ':item_id'        => $itemId,
+        ':claimant_id'     => $user['id'],
+        ':claimant_name'   => $name,
+        ':claimant_email'  => $email,
+        ':claimant_phone'  => $phone,
+        ':claim_message'   => $message
     ]);
 
     echo json_encode([
         'success' => true,
-        'message' => 'Claim inquiry sent successfully! The reporter will review your proof of ownership and contact you.'
+        'message' => 'Claim inquiry sent successfully! The reporter will review your proof of ownership.'
     ]);
 }
 
@@ -223,14 +221,22 @@ function handleCreateItem($pdo) {
         return;
     }
 
+    // Require Login for Creating/Posting Items
+    if (!is_logged_in()) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'error' => 'You must log in to publish a report.']);
+        return;
+    }
+
+    $user = current_user();
     $type = in_array($_POST['type'] ?? '', ['lost', 'found']) ? $_POST['type'] : 'lost';
     $title = sanitize($_POST['title'] ?? '');
     $category = sanitize($_POST['category'] ?? '');
     $item_date = sanitize($_POST['item_date'] ?? date('Y-m-d'));
     $location = sanitize($_POST['location'] ?? '');
     $description = sanitize($_POST['description'] ?? '');
-    $contact_name = sanitize($_POST['contact_name'] ?? '');
-    $contact_email = sanitize($_POST['contact_email'] ?? '');
+    $contact_name = sanitize($_POST['contact_name'] ?? $user['name']);
+    $contact_email = sanitize($_POST['contact_email'] ?? $user['email']);
     $contact_phone = sanitize($_POST['contact_phone'] ?? '');
 
     $categories = get_categories();
@@ -255,17 +261,7 @@ function handleCreateItem($pdo) {
         return;
     }
 
-    if (empty($contact_name)) {
-        echo json_encode(['success' => false, 'error' => 'Contact name is required.']);
-        return;
-    }
-
-    if (empty($contact_email) || !filter_var($contact_email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['success' => false, 'error' => 'A valid contact email is required.']);
-        return;
-    }
-
-    // Handle optional image upload
+    // Optional image upload
     $uploaded_image_name = null;
     if (isset($_FILES['item_image']) && $_FILES['item_image']['error'] !== UPLOAD_ERR_NO_FILE) {
         $uploadResult = handle_image_upload('item_image');
@@ -278,14 +274,13 @@ function handleCreateItem($pdo) {
     }
 
     $securitySecret = bin2hex(random_bytes(16));
-
     $sql = "
         INSERT INTO items (
-            type, title, category, description, location, 
+            user_id, type, title, category, description, location, 
             item_date, image_path, contact_name, contact_email, 
             contact_phone, status, security_secret
         ) VALUES (
-            :type, :title, :category, :description, :location, 
+            :user_id, :type, :title, :category, :description, :location, 
             :item_date, :image_path, :contact_name, :contact_email, 
             :contact_phone, 'active', :security_secret
         )
@@ -293,6 +288,7 @@ function handleCreateItem($pdo) {
 
     $stmt = $pdo->prepare($sql);
     $success = $stmt->execute([
+        ':user_id'         => $user['id'],
         ':type'            => $type,
         ':title'           => $title,
         ':category'        => $category,
@@ -317,4 +313,3 @@ function handleCreateItem($pdo) {
         echo json_encode(['success' => false, 'error' => 'Failed to save item to database.']);
     }
 }
-
