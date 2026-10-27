@@ -207,14 +207,7 @@ render_header($pageTitle);
                 </div>
             </form>
 
-            <!-- Quick Demo Credentials Box -->
-            <div style="margin-top: 1.5rem; background: #f8fafc; border: 1px dashed var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem 1rem; font-size: 0.82rem; color: var(--text-muted);">
-                <strong style="color: var(--text-main); display: block; margin-bottom: 0.35rem;">Default Demo Credentials:</strong>
-                <div>👑 <strong>Admin:</strong> <code>admin@findit.local</code> / <code>admin123</code></div>
-                <div>👤 <strong>User:</strong> <code>john@example.com</code> / <code>password123</code></div>
-            </div>
-
-            <div style="text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted);">
+            <div style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
                 New to FindIt? <a href="login.php?action=register" style="color: var(--primary); font-weight: 600;">Create an account here</a>
             </div>
 

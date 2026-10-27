@@ -81,7 +81,7 @@ http://localhost:8000
 ```
 lost_and_found/
 ├── index.php                   # Flagship Portal Home (Compulsory login, stats, hero, category feed)
-├── login.php                   # Unified Authentication (Sign In, Registration, Logout with demo credentials)
+├── login.php                   # Unified Authentication (Sign In, Registration, Logout)
 ├── browse.php                  # Advanced Catalog Search & Multi-filter browser
 ├── report.php                  # Unified Form: Post New Item (INSERT) & Edit Listing (UPDATE)
 ├── item.php                    # Detailed Item View, Claim Submissions, Status Toggling & Deletions (CRUD)
