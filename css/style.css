@@ -5,10 +5,10 @@
 
 :root {
   /* Brand & Accent */
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --primary-border: #bfdbfe;
+  --primary: #0f766e;
+  --primary-hover: #115e59;
+  --primary-light: #e6f5f2;
+  --primary-border: #b7e3d9;
 
   /* Status Tokens */
   --lost-color: #b91c1c;
@@ -21,19 +21,19 @@
   --found-border: #a7f3d0;
   --found-dot: #059669;
 
-  --claimed-color: #475569;
-  --claimed-bg: #f1f5f9;
-  --claimed-border: #e2e8f0;
-  --claimed-dot: #64748b;
+  --claimed-color: #526761;
+  --claimed-bg: #eef3f1;
+  --claimed-border: #dce6e2;
+  --claimed-dot: #667a75;
 
   /* Neutrals */
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --bg-body: #f8fafc;
+  --text-main: #172f2b;
+  --text-secondary: #263f3b;
+  --text-muted: #667a75;
+  --bg-body: #f5f8f6;
   --bg-card: #ffffff;
-  --border-color: #e2e8f0;
-  --border-focus: #3b82f6;
+  --border-color: #dce6e2;
+  --border-focus: #0f766e;
 
   /* Radii */
   --radius-xs: 4px;
@@ -43,11 +43,11 @@
   --radius-full: 9999px;
 
   /* Refined Elevation Shadows */
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
-  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-xs: 0 1px 2px rgba(21, 52, 47, 0.04);
+  --shadow-sm: 0 1px 3px rgba(21, 52, 47, 0.06), 0 1px 2px rgba(21, 52, 47, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(21, 52, 47, 0.07), 0 2px 4px -2px rgba(21, 52, 47, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(21, 52, 47, 0.08), 0 4px 6px -4px rgba(21, 52, 47, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(21, 52, 47, 0.1), 0 8px 10px -6px rgba(21, 52, 47, 0.05);
 
   --transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -144,7 +144,7 @@ img {
 
 .nav-link:hover {
   color: var(--text-main);
-  background: #f1f5f9;
+  background: #eef3f1;
 }
 
 .nav-link.active {
@@ -220,7 +220,7 @@ img {
   background-color: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
-  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.2);
 }
 
 .btn-primary:hover {
@@ -236,9 +236,9 @@ img {
 }
 
 .btn-secondary:hover {
-  background-color: #f8fafc;
+  background-color: #f5f8f6;
   color: var(--text-main);
-  border-color: #cbd5e1;
+  border-color: #c8d5d0;
 }
 
 .btn-danger {
@@ -336,7 +336,7 @@ img {
 
 .search-box-wrapper:focus-within {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
 }
 
 .search-input {
@@ -350,12 +350,12 @@ img {
 }
 
 .search-input::placeholder {
-  color: #94a3b8;
+  color: #849791;
 }
 
 .search-category-select {
   border: 1px solid var(--border-color);
-  background: #f8fafc;
+  background: #f5f8f6;
   padding: 0.6rem 0.9rem;
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -392,7 +392,7 @@ img {
 }
 
 .stat-card:hover {
-  border-color: #cbd5e1;
+  border-color: #c8d5d0;
   box-shadow: var(--shadow-sm);
 }
 
@@ -440,7 +440,7 @@ img {
 
 .type-tabs {
   display: flex;
-  background: #f1f5f9;
+  background: #eef3f1;
   padding: 3px;
   border-radius: var(--radius-sm);
   gap: 2px;
@@ -495,8 +495,8 @@ img {
 }
 
 .category-pill:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
+  background: #f5f8f6;
+  border-color: #c8d5d0;
   color: var(--text-main);
 }
 
@@ -527,7 +527,7 @@ img {
 }
 
 .item-card:hover {
-  border-color: #cbd5e1;
+  border-color: #c8d5d0;
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
@@ -535,7 +535,7 @@ img {
 .card-img-wrapper {
   position: relative;
   height: 180px;
-  background-color: #f1f5f9;
+  background-color: #eef3f1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -559,7 +559,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: #849791;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -703,7 +703,7 @@ img {
   width: 48px;
   height: 48px;
   margin: 0 auto 1rem;
-  color: #94a3b8;
+  color: #849791;
 }
 
 .empty-state h3 {
@@ -762,7 +762,7 @@ img {
 }
 
 .step-card:hover {
-  border-color: #cbd5e1;
+  border-color: #c8d5d0;
   box-shadow: var(--shadow-sm);
 }
 
@@ -858,7 +858,7 @@ img {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   margin-bottom: 1.75rem;
-  background: #f1f5f9;
+  background: #eef3f1;
   padding: 4px;
   border-radius: var(--radius-sm);
 }
@@ -940,12 +940,12 @@ img {
 
 .form-control:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
 }
 
 .form-control.is-invalid {
   border-color: var(--lost-dot) !important;
-  background-color: #fffafa;
+  background-color: #f5f8f6;
 }
 
 .field-error {
@@ -963,11 +963,11 @@ textarea.form-control {
 
 /* Image Upload Area */
 .file-upload-box {
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed #c8d5d0;
   padding: 1.75rem 1rem;
   border-radius: var(--radius-sm);
   text-align: center;
-  background-color: #f8fafc;
+  background-color: #f5f8f6;
   cursor: pointer;
   transition: var(--transition);
   position: relative;
@@ -1039,7 +1039,7 @@ textarea.form-control {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(21, 52, 47, 0.45);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1116,7 +1116,7 @@ textarea.form-control {
 
 .toast {
   padding: 0.75rem 1.15rem;
-  background: #0f172a;
+  background: #172f2b;
   color: #ffffff;
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
@@ -1125,7 +1125,7 @@ textarea.form-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid #334155;
+  border: 1px solid #263f3b;
   animation: slideIn 0.25s ease;
 }
 
@@ -1170,7 +1170,7 @@ textarea.form-control {
 }
 
 .breadcrumbs span.divider {
-  color: #cbd5e1;
+  color: #c8d5d0;
 }
 
 /* ==========================================================================
@@ -1237,7 +1237,7 @@ textarea.form-control {
 .footer-bottom {
   border-top: 1px solid var(--border-color);
   padding: 1.25rem 1.5rem;
-  background: #f8fafc;
+  background: #f5f8f6;
 }
 
 .footer-container {
